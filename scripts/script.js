@@ -19,7 +19,7 @@ function readPlayers(){
     names = ["pedro", "juan", "diego"]
     for (let i = 0; i < N; i++) points.push(501);
     console.log("Comienza el juego !");
-    console.log("turno de ", names[0]);
+    console.log(`turno de ${names[0]}`);
     printPuntajes();
     return names;
 }
@@ -27,13 +27,13 @@ function readPlayers(){
 const square = (n) => n*n;
 
 function finishGame(){
-    console.log("ha ganado", names[player], "!!");
+    console.log(`ha ganado ${names[player]}!`);
     // TODO resetear todo
 }
 
 function printPuntajes(){
     for (let i = 0; i < N; i++){
-        console.log(names[i], points[i]);
+        console.log(`${names[i]} ${points[i]}`);
     }
 }
 
@@ -51,7 +51,7 @@ function update(){
         player++; 
         player %= N;
         shots.length = 0;
-        console.log("Turno de ", names[player]);
+        console.log(`Turno de ${names[player]}`);
         printPuntajes();
     }
 }
