@@ -13,7 +13,7 @@ const points = [];
 let player = 0; // current player
 let N = 3; // cantidad de jugadores
 
-function readPlayers(){
+const readPlayers = () => {
     /// leer cantidad de jugadores y sus nombres TODO
     N = 3;
     names = ["pedro", "juan", "diego"]
@@ -26,18 +26,18 @@ function readPlayers(){
 
 const square = (n) => n*n;
 
-function finishGame(){
+const finishGame = () => {
     console.log(`ha ganado ${names[player]}!`);
     // TODO resetear todo
 }
 
-function printPuntajes(){
+const printPuntajes = () => {
     for (let i = 0; i < N; i++){
         console.log(`${names[i]} ${points[i]}`);
     }
 }
 
-function update(){
+const update = () => {
     let total = 0;
     for (let i = 0; i < 3; i ++){
         if (Array.isArray(shots[i])) total += shots[i][0]*shots[i][1];
@@ -56,7 +56,7 @@ function update(){
     }
 }
 
-function savePoints(circlesRadius, angles, nums, CX, CY, x, y){
+const savePoints = (circlesRadius, angles, nums, CX, CY, x, y) => {
     const radius = square(CX-x)+square(CY-y);
     const rad = Math.pow(radius, 0.5);
     let angle = Math.acos((x-CX)/rad);
@@ -81,7 +81,7 @@ function savePoints(circlesRadius, angles, nums, CX, CY, x, y){
     if (shots.length == 3) update();
 }
 
-function getRandomList(n){
+const getRandomList = (n) => {
     const A = [];
     for (let i = 1; i <= n; i++) A.push(i);
     for (let i = 0; i < n-1; i++){
@@ -94,20 +94,20 @@ function getRandomList(n){
     return A;
 }
 
-function getAngles(n){
+const getAngles = (n) =>{
     const A = [];
     const alpha = 2*Math.PI/n;
     for (let i = 0; i < n; i++) A.push(alpha*i);
     return A;
 }
 
-function getLines(A){
+const getLines = (A) => {
     const lines = [];
     for (let i = 0; i < A.length; i++) lines.push({"x": Math.cos(A[i]), "y": Math.sin(A[i])});
     return lines;
 }
 
-function weights(alpha){
+const weights = (alpha) => {
     return ((Math.sin(5.23+alpha)+1)*0.1+1.08)
 }
 
@@ -180,7 +180,7 @@ const dartsCircle = async (width, height, margin) => {
             
 }
 
-function main(){
+const main = () => {
     readPlayers();
     dartsCircle(WIDTH, HEIGHT, MARGIN);
 }
