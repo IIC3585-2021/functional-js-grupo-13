@@ -1,46 +1,40 @@
-const WIDTH = 600;
-const HEIGHT = 500;
-const MARGIN = {
-    top: 20,
-    bottom: 20,
-    left: 20,
-    right: 20
-}
+import utils from './utils.js';
 
-const shots =  []; // shots of current player
+const {getAngles, getLines, getRandomList, weights, WIDTH, HEIGHT, MARGIN} = utils;
+
+let N; //numbers of players;
 let names = [];
-const points = [];
 let player = 0; // current player
-let N = 3; // cantidad de jugadores
+let points = [];
+const shots =  []; // shots of current player
 
-const readPlayers = () => {
-    /// leer cantidad de jugadores y sus nombres TODO
-    N = 3;
-    names = ["pedro", "juan", "diego"]
+const printPuntajes = () => {
+    names.forEach((name, index) => {
+        console.log(`${name} ${points[index]}`);
+    });
+};
+
+const readPlayers = (players) => {
+    names = players;
+    N = names.length;
     for (let i = 0; i < N; i++) points.push(501);
     console.log("Comienza el juego !");
     console.log(`turno de ${names[0]}`);
     printPuntajes();
-    return names;
-}
+    return players;
+};
 
 const square = (n) => n*n;
 
 const finishGame = () => {
     console.log(`ha ganado ${names[player]}!`);
-    // TODO resetear todo
-}
-
-const printPuntajes = () => {
-    for (let i = 0; i < N; i++){
-        console.log(`${names[i]} ${points[i]}`);
-    }
-}
+    points = points.map((_) => 501);
+};
 
 const update = () => {
     let total = 0;
     for (let i = 0; i < 3; i ++){
-        if (Array.isArray(shots[i])) total += shots[i][0]*shots[i][1];
+        if (typeof shots[i] === "number") total += shots[i];
         else if (shots[i] == "DB") total += 50;
         else total += 25;
     }
@@ -54,7 +48,7 @@ const update = () => {
         console.log(`Turno de ${names[player]}`);
         printPuntajes();
     }
-}
+};
 
 const savePoints = (circlesRadius, angles, nums, CX, CY, x, y) => {
     const radius = square(CX-x)+square(CY-y);
@@ -72,44 +66,14 @@ const savePoints = (circlesRadius, angles, nums, CX, CY, x, y) => {
     }
     if (radpos == 6) shots.push("DB");
     else if (radpos == 5) shots.push("SB");
-    else if (radpos == 4) shots.push([1, nums[numpos]]);
-    else if (radpos == 3) shots.push([3, nums[numpos]]);
-    else if (radpos == 2) shots.push([1, nums[numpos]]);
-    else if (radpos == 1) shots.push([2, nums[numpos]]);
-    else if (radpos == 0) shots.push([0, nums[numpos]]);
+    else if (radpos == 4) shots.push(1 * parseInt(nums[numpos]));
+    else if (radpos == 3) shots.push(3 * parseInt(nums[numpos]));
+    else if (radpos == 2) shots.push(1 * parseInt(nums[numpos]));
+    else if (radpos == 1) shots.push(2 * parseInt(nums[numpos]));
+    else if (radpos == 0) shots.push(0 * parseInt(nums[numpos]));
 
     if (shots.length == 3) update();
-}
-
-const getRandomList = (n) => {
-    const A = [];
-    for (let i = 1; i <= n; i++) A.push(i);
-    for (let i = 0; i < n-1; i++){
-        const j = Math.floor(Math.random() * (n-i-1))+i+1;
-        A[i] ^= A[j];
-        A[j] ^= A[i];
-        A[i] ^= A[j];
-        // [A[i], A[j]] = [A[j], A[i]]; no funciona  ???? TODO
-    }
-    return A;
-}
-
-const getAngles = (n) =>{
-    const A = [];
-    const alpha = 2*Math.PI/n;
-    for (let i = 0; i < n; i++) A.push(alpha*i);
-    return A;
-}
-
-const getLines = (A) => {
-    const lines = [];
-    for (let i = 0; i < A.length; i++) lines.push({"x": Math.cos(A[i]), "y": Math.sin(A[i])});
-    return lines;
-}
-
-const weights = (alpha) => {
-    return ((Math.sin(5.23+alpha)+1)*0.1+1.08)
-}
+};
 
 const dartsCircle = async (width, height, margin) => {
     const circlesRadius = [160, 120, 110, 80, 70, 20, 10]
@@ -181,7 +145,7 @@ const dartsCircle = async (width, height, margin) => {
 }
 
 const main = () => {
-    readPlayers();
+    readPlayers(["pedro", "juan", "diego"]);
     dartsCircle(WIDTH, HEIGHT, MARGIN);
 }
 
