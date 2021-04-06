@@ -13,6 +13,14 @@ let player = 0; // current player
 let points; //list of points per player
 const shots =  []; // shots of current player
 
+// retorna el último indice donde la funcion statement es verdadera
+const lastTrue = (statement, index, list) => {
+    if (index != list.length && statement(index, list)) return lastTrue(statement, index+1, list);
+    return index-1;
+}
+
+const square = (n) => n*n;
+
 const printPuntajes = () => {
     names.forEach((name, index) => {
         console.log(`${name} ${points[index]}`);
@@ -33,21 +41,20 @@ const readPlayers = (players) => {
     return players;
 };
 
-const square = (n) => n*n;
-
 const finishGame = () => {
     console.log(`ha ganado ${names[player]}!`);
     points = points.map((_) => 501);
 };
 
-//buscar forma funcional para reemplazar los for's si es que se puede
 
+// retorna el valor de un lanzamiento 
 const getPoints = (shot) => {
     if (typeof shot === "number") return shot;
     else if (shot == "DB") return 50;
     return 25;
 }
 
+// retorna la suma de los últimos 3 lanzamientos
 const getSum = (pos) => {
     if (pos == 3) return 0;
     return getPoints(shots[pos]) + getSum(pos+1);
@@ -65,12 +72,6 @@ const update = () => {
         printPuntajes();
     }
 };
-
-// retorna el último indice donde la funcion statement es verdadera
-const lastTrue = (statement, index, list) => {
-    if (index != list.length && statement(index, list)) return lastTrue(statement, index+1, list);
-    return index-1;
-}
 
 //buscar forma funcional para reemplazar los for's si es que se puede
 const savePoints = (circlesRadius, angles, nums, CX, CY, x, y) => {
