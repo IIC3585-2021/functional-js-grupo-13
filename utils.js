@@ -9,10 +9,11 @@ const MARGIN = {
     right: 20
 };
 
-const getRandomList = (n) => {
-    const randomList =  Array(100).fill().map((_, index) => index + 1);
-    randomList.sort(() => Math.random() - 0.5);
-    return randomList;
+// retorna una lista random de tamaño n
+const getRandomList = (n, randomList=[]) => {
+    if (!n) return randomList;
+    const pos = Math.floor(Math.random()*randomList.length);
+    return getRandomList (n-1, randomList.slice(0, pos).concat([n], randomList.slice(pos)));
 };
 
 // se cambío a una forma más compacta para definir el arreglo 
