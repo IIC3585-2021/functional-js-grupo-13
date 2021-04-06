@@ -9,16 +9,9 @@ const MARGIN = {
     right: 20
 };
 
-//buscar una forma funcional de hacer esto
 const getRandomList = (n) => {
-    const randomList = Array.from({length: n}, (_, i) => i + 1);
-    for (let i = 0; i < n-1; i++){
-        const j = Math.floor(Math.random() * (n-i-1))+i+1;
-        randomList[i] ^= randomList[j];
-        randomList[j] ^= randomList[i];
-        randomList[i] ^= randomList[j];
-        // [A[i], A[j]] = [A[j], A[i]]; no funciona  ???? TODO
-    }
+    const randomList =  Array(100).fill().map((_, index) => index + 1);
+    randomList.sort(() => Math.random() - 0.5);
     return randomList;
 };
 

@@ -31,6 +31,7 @@ const finishGame = () => {
     points = points.map((_) => 501);
 };
 
+//buscar forma funcional para reemplazar los for's si es que se puede
 const update = () => {
     let total = 0;
     for (let i = 0; i < 3; i ++){
@@ -50,6 +51,7 @@ const update = () => {
     }
 };
 
+//buscar forma funcional para reemplazar los for's si es que se puede
 const savePoints = (circlesRadius, angles, nums, CX, CY, x, y) => {
     const radius = square(CX-x)+square(CY-y);
     const rad = Math.pow(radius, 0.5);
