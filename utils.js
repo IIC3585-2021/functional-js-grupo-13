@@ -11,8 +11,7 @@ const MARGIN = {
 
 //buscar una forma funcional de hacer esto
 const getRandomList = (n) => {
-    const randomList = [];
-    for (let i = 1; i <= n; i++) randomList.push(i);
+    const randomList = Array.from({length: n}, (_, i) => i + 1);
     for (let i = 0; i < n-1; i++){
         const j = Math.floor(Math.random() * (n-i-1))+i+1;
         randomList[i] ^= randomList[j];

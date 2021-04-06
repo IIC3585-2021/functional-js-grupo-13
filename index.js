@@ -5,7 +5,7 @@ const {getAngles, getLines, getRandomList, weights, WIDTH, HEIGHT, MARGIN} = uti
 let N; //numbers of players;
 let names = [];
 let player = 0; // current player
-let points = [];
+let points; //list of points per player
 const shots =  []; // shots of current player
 
 const printPuntajes = () => {
@@ -17,7 +17,7 @@ const printPuntajes = () => {
 const readPlayers = (players) => {
     names = players;
     N = names.length;
-    for (let i = 0; i < N; i++) points.push(501);
+    points = Array.from({length: N}, () => 501)
     console.log("Comienza el juego !");
     console.log(`turno de ${names[0]}`);
     printPuntajes();
