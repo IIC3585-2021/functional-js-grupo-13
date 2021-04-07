@@ -24,11 +24,11 @@ const printPuntajes = () => {
     names.forEach((name, index) => {console.log(`${name} ${points[index]}`)});
 };
 
-const printTurn = () => {console.log(`Turno de ${names[player]}`)};
+const printTurn = () => { console.log(`Turno de ${names[player]}`) };
 
-const readPlayers = (players, player_colors) => {
-    names = players;
-    colors = player_colors;
+const readPlayers = (players) => {
+    names = players.map(player => player[0]);
+    colors = players.map(player => player[1]);
     N = names.length;
     points = Array.from({length: N}, () => 501)
     console.log("¡Comienza el juego!");
@@ -46,11 +46,10 @@ const finishGame = () => {
 // retorna el valor de un lanzamiento
 const getPoints = (shot) => (typeof shot === "number") ? shot : (shot == "DB") ? 50 : 25;
 
-// retorna la suma de los últimos 3 lanzamientos
-const getSum = (pos) => (pos == 3) ? 0 : getPoints(shots[pos]) + getSum(pos+1);
-
 const update = () => {
-    let total = getSum(0);
+    // Sumamos el total del turno con reduce
+    let total = shots.reduce((x, y) => getPoints(x) + getPoints(y));
+    console.log(total);
     points[player] -= total;
     points[player] = Math.abs(points[player]);
     if (!points[player]) finishGame();
@@ -184,7 +183,7 @@ const dartsCircle = async (width, height, margin) => {
 }
 
 const main = () => {
-    readPlayers(["Pedro", "Juan", "Diego"], ["red", "green", "blue"]);
+    readPlayers([["Pedro", "red"], ["Juan", "green"], ["Diego", "blue"]]);
     dartsCircle(WIDTH, HEIGHT, MARGIN);
 }
 
