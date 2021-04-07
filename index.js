@@ -48,7 +48,7 @@ const getPoints = (shot) => (typeof shot === "number") ? shot : (shot == "DB") ?
 
 const update = () => {
     // Sumamos el total del turno con reduce
-    let total = shots.reduce((x, y) => getPoints(x) + getPoints(y));
+    let total = shots.map(getPoints).reduce((x, y) => x + y);
     points[player] -= total;
     points[player] = Math.abs(points[player]);
     if (!points[player]) finishGame();
