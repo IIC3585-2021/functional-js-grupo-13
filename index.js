@@ -21,14 +21,10 @@ const lastTrue = (statement, index, list) =>
 const square = (n) => n*n;
 
 const printPuntajes = () => {
-    names.forEach((name, index) => {
-        console.log(`${name} ${points[index]}`);
-    });
+    names.forEach((name, index) => {console.log(`${name} ${points[index]}`)});
 };
 
-const printTurn = () => {
-    console.log(`turno de ${names[player]}`);
-}
+const printTurn = () => {console.log(`Turno de ${names[player]}`)};
 
 const readPlayers = (players, player_colors) => {
     names = players;
@@ -36,8 +32,8 @@ const readPlayers = (players, player_colors) => {
     N = names.length;
     points = Array.from({length: N}, () => 501)
     console.log("¡Comienza el juego!");
-    printTurn();
     printPuntajes();
+    printTurn();
     return players;
 };
 
@@ -61,8 +57,8 @@ const update = () => {
     else {
         player++;
         player %= N;
-        printTurn();
         printPuntajes();
+        printTurn();
     }
 };
 
@@ -105,6 +101,7 @@ const dartsCircle = async (width, height, margin) => {
 
         container
         .append("circle")
+        .attr("class", `dart${player}`)
         .attr("cx", width)
         .attr("cy", 0)
         .attr("r", 100)
@@ -116,6 +113,8 @@ const dartsCircle = async (width, height, margin) => {
         .attr("cy", y)
 
         savePoints(circlesRadius, angles, values, CX, CY, x, y);
+
+        if (!shots.length) container.selectAll(`circle.dart${player}`).remove();
     }
 
     const container = svg.append("g") // inserta un <g></g> donde irá el tablero
