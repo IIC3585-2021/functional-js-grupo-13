@@ -68,7 +68,7 @@ const update = () => {
     }
 };
 
-//buscar forma funcional para reemplazar los for's si es que se puede
+// guarda los puntos equivalentes al último lanzamiento
 const savePoints = (circlesRadius, angles, nums, CX, CY, x, y) => {
     const radius = square(CX-x)+square(CY-y);
     const rad = Math.pow(radius, 0.5);
@@ -79,7 +79,6 @@ const savePoints = (circlesRadius, angles, nums, CX, CY, x, y) => {
 
     const radpos = lastRad();
     const numpos = lastNum();
-
 
     (radpos == 6) ? shots.push("DB") :
     (radpos == 5) ? shots.push("SB") :
@@ -165,7 +164,6 @@ const dartsCircle = async (width, height, margin) => {
         return ((Math.sin(5.23+alpha)+1)*0.1+1.08)
     };
 
-
     const n = 20;
     const values = getRandomList(n);
     const angles = getAngles(n);
@@ -190,7 +188,6 @@ const dartsCircle = async (width, height, margin) => {
             .attr("y", (_, i) => CY + secondRadious*Math.sin((angles[i] + (i + 1 < n ? angles[i + 1]: 2*Math.PI))*0.5)*weights((angles[i] + (i + 1 < n ? angles[i + 1]: 2*Math.PI))*0.5))
             .text((d)=> d)
             .attr("stroke", "white")
-
 }
 
 const main = () => {
