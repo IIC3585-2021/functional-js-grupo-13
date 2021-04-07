@@ -15,8 +15,16 @@ let points; //list of points per player
 const shots =  []; // shots of current player
 
 // retorna el último indice donde la funcion statement es verdadera
-const lastTrue = (statement, index, list) =>
-    (index != list.length && statement(index, list)) ? lastTrue(statement, index+1, list) : index-1;
+const lastTrueCurry = (statement) => {
+    return (list) => {
+        const f = (index=0) => {
+            if (index != list.length && statement(index, list)) return f(index+1);
+            else return index-1;
+        }
+        return  f;
+    };
+};
+    
 
 const square = (n) => n*n;
 
@@ -66,8 +74,12 @@ const savePoints = (circlesRadius, angles, nums, CX, CY, x, y) => {
     const rad = Math.pow(radius, 0.5);
     const angle = y < CY ? 2*Math.PI - Math.acos((x-CX)/rad): Math.acos((x-CX)/rad);
 
-    const radpos = lastTrue((i, circlesRadius) => square(circlesRadius[i]) >= radius, 0, circlesRadius);
-    const numpos = lastTrue((i, angles) =>  angle > angles[i], 0, angles);
+    const lastRad = lastTrueCurry((i, circlesRadius) => square(circlesRadius[i]) >= radius)(circlesRadius);
+    const lastNum = lastTrueCurry((i, angles) =>  angle > angles[i])(angles); 
+
+    const radpos = lastRad();
+    const numpos = lastNum();
+
 
     (radpos == 6) ? shots.push("DB") :
     (radpos == 5) ? shots.push("SB") :
