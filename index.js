@@ -26,7 +26,7 @@ const printPuntajes = () => {
 
 const printTurn = () => { console.log(`Turno de ${names[player]}`) };
 
-const readPlayers = (players) => {
+const readPlayers = (...players) => {
     names = players.map(player => player[0]);
     colors = players.map(player => player[1]);
     N = names.length;
@@ -49,7 +49,6 @@ const getPoints = (shot) => (typeof shot === "number") ? shot : (shot == "DB") ?
 const update = () => {
     // Sumamos el total del turno con reduce
     let total = shots.reduce((x, y) => getPoints(x) + getPoints(y));
-    console.log(total);
     points[player] -= total;
     points[player] = Math.abs(points[player]);
     if (!points[player]) finishGame();
@@ -183,7 +182,7 @@ const dartsCircle = async (width, height, margin) => {
 }
 
 const main = () => {
-    readPlayers([["Pedro", "red"], ["Juan", "green"], ["Diego", "blue"]]);
+    readPlayers(["Pedro", "red"], ["Juan", "green"], ["Diego", "blue"]);
     dartsCircle(WIDTH, HEIGHT, MARGIN);
 }
 
